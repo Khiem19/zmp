@@ -7,7 +7,7 @@
    </Plugins>
    <Objects>
      <Cube Name="Base" Shift="0 0 0" 
-            Scale="3.0 2.0 1.5" RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="255 0 0"/>
+            Scale="3.0 2.0 1.5" RotXYZ_deg="0 0 0" Trans_m="50 50 0" RGB="255 0 0"/>
      <Cube Name="Base.Hood" Shift="0 0 0" 
             Scale="2.0 1.0 1.5" RotXYZ_deg="0 0 0" Trans_m="-1.5 -0.2 0" RGB="0 255 0"/>
      <Cube Name="Base.Boot" Shift="0 0 0"

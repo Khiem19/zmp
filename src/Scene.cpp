@@ -1,24 +1,24 @@
 #include "Scene.hh"
 
-Scene::Scene(Configuration &config)
+Scene::Scene(Configuration& config)
 {
-
-  for (int i = 0; i < config._ObjectsConfig.size(); i++)
+  for (const auto& objectConfig : config._ObjectsConfig)
   {
     MobileObj tmp;
-    tmp.SetName(config._ObjectsConfig[i].name.c_str());
-    tmp.SetAng_Roll_deg(config._ObjectsConfig[i].rot[0]);
-    tmp.SetAng_Pitch_deg(config._ObjectsConfig[i].rot[1]);
-    tmp.SetAng_Yaw_deg(config._ObjectsConfig[i].rot[2]);
-    tmp.SetPosition_m(config._ObjectsConfig[i].shift);
-    tmp.setRgb(config._ObjectsConfig[i].rgb);
-    tmp.setScale(config._ObjectsConfig[i].scale);
-    tmp.setTranslation(config._ObjectsConfig[i].trans);
+    tmp.SetName(objectConfig.name.c_str());
+    tmp.SetAng_Roll_deg(objectConfig.rot[0]);
+    tmp.SetAng_Pitch_deg(objectConfig.rot[1]);
+    tmp.SetAng_Yaw_deg(objectConfig.rot[2]);
+    tmp.SetPosition_m(objectConfig.shift);
+    tmp.setRgb(objectConfig.rgb);
+    tmp.setScale(objectConfig.scale);
+    tmp.setTranslation(objectConfig.trans);
 
     AddMobileObj(&tmp);
-    std::cout << "dodano obiekt " << tmp.GetName() << std::endl;
+    std::cout << "Added object: " << tmp.GetName() << std::endl;
   }
 }
+
 
 
 void Scene::AddMobileObj(MobileObj *pMobObj)
