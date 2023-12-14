@@ -1,0 +1,24 @@
+  <Config>
+   <Plugins>
+      <Lib Name="libInterp4Move.so"/>
+      <Lib Name="libInterp4Rotate.so"/>
+      <Lib Name="libInterp4Pause.so"/>
+      <Lib Name="libInterp4Set.so"/>
+   </Plugins>
+   <Objects>
+     <Cube Name="Base" Shift="0 0 0" 
+            Scale="2.0 1.0 1.2" RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="255 0 0"/>
+     <Cube Name="Base.Hood" Shift="0 0 0" 
+            Scale="1.0 0.6 1.2" RotXYZ_deg="0 0 0" Trans_m="-1.5 -0.2 0" RGB="0 255 0"/>
+     <Cube Name="Base.Boot" Shift="0 0 0"
+            Scale="0.6 0.6 1.2" RotXYZ_deg="0 0 0" Trans_m="1.3 -0.2 0" RGB="0 0 255"/>
+     <Cube Name="Base.Boot.WheelLeft" Shift="0 0 0"
+            Scale="0.6 0.6 0.1" RotXYZ_deg="0 0 0" Trans_m="0.15 -0.2 0.7" RGB="0 0 0"/>
+     <Cube Name="Base.Boot.WheelRight" Shift="0 0 0"
+            Scale="0.6 0.6 0.1" RotXYZ_deg="0 0 0" Trans_m="0.15 -0.2 -0.7" RGB="0 0 0"/>
+     <Cube Name="Base.Hood.WheelLeft" Shift="0 0 0" 
+            Scale="0.6 0.6 0.1" RotXYZ_deg="0 0 0" Trans_m="-0.15 -0.2 0.7" RGB="0 0 0"/>
+     <Cube Name="Base.Hood.WheelRight" Shift="0 0 0" 
+            Scale="0.6 0.6 0.1" RotXYZ_deg="0 0 0" Trans_m="-0.15 -0.2 -0.7" RGB="0 0 0"/>
+   </Objects>
+  </Config>
