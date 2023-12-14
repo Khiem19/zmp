@@ -5,41 +5,37 @@ LibInterface::~LibInterface()
     dlclose(_LibHandler);
 }
 
-bool LibInterface::init(std::string libraryName)
-{
-
+bool LibInterface::init(std::string libraryName) {
     _LibHandler = dlopen(libraryName.c_str(), RTLD_LAZY);
-    void *function;
     const char *(*getCmdName)(void);
 
-    if (!_LibHandler)
-    {
+    if (!_LibHandler) {
         std::cerr << "!!! Brak biblioteki: " << libraryName << std::endl;
-        return 1;
+        return false;
     }
 
-    function = dlsym(_LibHandler, "CreateCmd");
+    void *function = dlsym(_LibHandler, "CreateCmd");
 
-    if (!function)
-    {
+    if (!function) {
         std::cerr << "!!! Nie znaleziono funkcji CreateCmd w " << libraryName << std::endl;
-        return 1;
+        return false;
     }
 
-    this->_pCreateCmd = *reinterpret_cast<AbstractInterp4Command *(**)(void)>(&function);
+    _pCreateCmd = *reinterpret_cast<AbstractInterp4Command *(**)(void)>(&function);
 
     function = dlsym(_LibHandler, "GetCmdName");
 
-    if (!function)
-    {
+    if (!function) {
         std::cerr << "!!! Nie znaleziono funkcji GetCmdName w " << libraryName << std::endl;
-        return 1;
+        return false;
     }
 
     getCmdName = reinterpret_cast<const char *(*)(void)>(function);
     _CmdName = getCmdName();
-    return 0;
+
+    return true;
 }
+
 
 AbstractInterp4Command *LibInterface::CreateCmd()
 {

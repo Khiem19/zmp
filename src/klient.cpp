@@ -28,24 +28,23 @@ int klient()
   std::string key;
 
   reader.execPreprocesor(stream);
-  while (stream >> key)
-  {
+  while (stream >> key) {
     command = lib_handler.execute(key);
 
-    if (lib_handler.isParallel() && command != nullptr)
-    {
-      command->ReadParams(stream);
-      threads.push_back(std::thread(&AbstractInterp4Command::ExecCmd, command, &scene));
+    if (lib_handler.isParallel() && command != nullptr) {
+        command->ReadParams(stream);
+        threads.push_back(std::thread(&AbstractInterp4Command::ExecCmd, command, &scene));
     }
-    else if (!lib_handler.isParallel())
-    {
-      for (auto &i : threads)
-      {
-        if (i.joinable())
-          i.join();
-      }
-      threads.clear();
+  }
+
+  // Wait for thread completion if commands are not parallel
+  if (!lib_handler.isParallel()) {
+    for (auto &i : threads) {
+        if (i.joinable()) {
+            i.join();
+        }
     }
+    threads.clear();
   }
 
   sender.Send("Close\n");

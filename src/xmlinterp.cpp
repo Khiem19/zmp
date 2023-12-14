@@ -98,27 +98,52 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
 
   for (int i = 0; i < attributes_number; i++) {
     std::string attribute = xercesc::XMLString::transcode(rAttrs.getQName(i));
-    if (attribute == "Name") {
-      sValue[0][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
-      sValue[0][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
-    } else if (attribute == "Shift") {
+    int attributeIndex = -1; // Initialize to an invalid index
 
-      sValue[1][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
-      sValue[1][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
+    if (attribute == "Name") {
+        attributeIndex = 0;
+    } else if (attribute == "Shift") {
+        attributeIndex = 1;
     } else if (attribute == "Scale") {
-      sValue[2][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
-      sValue[2][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
+        attributeIndex = 2;
     } else if (attribute == "RotXYZ_deg") {
-      sValue[3][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
-      sValue[3][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
+        attributeIndex = 3;
     } else if (attribute == "Trans_m") {
-      sValue[4][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
-      sValue[4][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
+        attributeIndex = 4;
     } else if (attribute == "RGB") {
-      sValue[5][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
-      sValue[5][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
+        attributeIndex = 5;
     }
-  }
+
+    switch (attributeIndex) {
+      case 0:
+          sValue[0][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
+          sValue[0][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
+          break;
+      case 1:
+          sValue[1][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
+          sValue[1][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
+          break;
+      case 2:
+          sValue[2][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
+          sValue[2][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
+          break;
+      case 3:
+          sValue[3][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
+          sValue[3][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
+          break;
+      case 4:
+          sValue[4][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
+          sValue[4][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
+          break;
+      case 5:
+          sValue[5][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
+          sValue[5][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
+          break;
+      default:
+          break;
+    }
+}
+
 
 
 

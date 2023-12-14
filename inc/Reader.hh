@@ -27,6 +27,13 @@ public:
     bool execPreprocesor(std::istringstream &IStrm4Cmds);
 
     bool ReadFile(const char *sFileName, Configuration &rConfig);
+
+    void setupParserFeaturesAndHandlers(xercesc::SAX2XMLReader* pParser, xercesc::DefaultHandler* pHandler);
+    bool loadGrammarAndParse(xercesc::SAX2XMLReader* pParser, const char* sFileName);
+    void handleXMLException(const xercesc::XMLException& Exception);
+    void handleSAXParseException(const xercesc::SAXParseException& Exception);
+    void cleanupParserAndHandler(xercesc::SAX2XMLReader* pParser, xercesc::DefaultHandler* pHandler);
+
 };
 
 #endif
