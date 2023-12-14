@@ -28,16 +28,12 @@ public:
 
     bool OpenConnection();
 
-    // Wysyła komunikat na serwer
-    // Zwraca 0 w przypadku sukcesu  
     int Send(const char *sMesg);
    
     bool ShouldCountinueLooping() const { return _ContinueLooping; }
   
     void CancelCountinueLooping() { _ContinueLooping = false; }
 
-    // Inicjalizuje komunikację z serwerem, wysyła dane początkowe
-    // W pętli obserwuje zmiany na scenie i wysyła aktualizacje
     void Watching_and_Sending();
     std::string getUpdateInstruction(MobileObj *obj) const;
     std::string getAddInstruction(MobileObj *obj) const;

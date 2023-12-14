@@ -24,14 +24,8 @@ public:
     Reader(){};
     bool init(std::string cmdFile);
     
-    // Wywołuje preprocesor C++
-    // Odczytuje i przekazuje dane ze strumienia do istringstream
-    // Wartość zwracana informuje o sukcesie operacji
     bool execPreprocesor(std::istringstream &IStrm4Cmds);
 
-    // Inicjalizacja i ustawienie parsera XML
-    // Parsowanie pliku XML i obsługa błędów
-    // Zwraca true, jeśli parsowanie zakończone sukcesem
     bool ReadFile(const char *sFileName, Configuration &rConfig);
 };
 

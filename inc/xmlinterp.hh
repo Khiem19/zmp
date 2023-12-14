@@ -10,7 +10,6 @@
 #include <xercesc/sax2/Attributes.hpp>
 #include <xercesc/sax2/DefaultHandler.hpp>
 
-//XERCES_CPP_NAMESPACE_USE
 
 #include "Configuration.hh"
 

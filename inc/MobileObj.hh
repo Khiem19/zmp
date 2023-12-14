@@ -67,15 +67,6 @@ class MobileObj: public AbstractMobileObj
         Vector3D rgb;
 
 public:
-        // MobileObj(std::string *Name, std::vector<Vector3D> *Attr){
-        //   _Name = *Name;
-        //   _Position_m = Attr->at(0);
-        //   scale =  Attr->at(1);
-        //   _Ang_Roll_deg = Attr->at(2)[0];
-        //   _Ang_Pitch_deg = Attr->at(2)[1];
-        //   _Ang_Yaw_deg = Attr->at(2)[2];
-        //   translation = Attr->at(3);
-        //   rgb = Attr->at(4);};
         /*!
          * \brief Udostępia wartość kąta \e roll.
          *

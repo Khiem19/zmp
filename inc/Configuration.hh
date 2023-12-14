@@ -12,8 +12,6 @@
 #include <memory>
 #include <map>
 
-// #include "LibInterface.hh"
-
 #include "MobileObjConfig.hh"
 
 using namespace std;
