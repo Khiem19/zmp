@@ -56,53 +56,63 @@ const char* Interp4Rotate::GetCmdName() const
 /*!
  *
  */
-bool Interp4Rotate::ExecCmd(Scene *scene) const
+bool Interp4Rotate::ExecCmd(Scene* scene) const
 {
-  MobileObj *obj = scene->FindMobileObj(_Name.c_str());
-  double roll = obj->GetAng_Roll_deg();
-  double pitch = obj->GetAng_Pitch_deg();
-  double yaw = obj->GetAng_Yaw_deg();
-
-  double time = _Angle / _Ang_speed; 
-  double steps = (int)(time * N);
-  double step_distance = _Angle / steps; 
-  double step= 100;            
-
-
-  double rotation = 0;
-  int axis_idx = 0;
-  if(_Axis == "OX"){
-    axis_idx=1;
-  }
-  else if(_Axis == "OY"){
-    axis_idx=2;
-  }
-  else if(_Axis == "OZ"){
-    axis_idx=3;
-  }
-  else 
-    std::cout << "Błędna nazwa osi obrotu: "<< _Axis << std::endl;
-
-  for (int i = 0; i < steps; ++i)
-  {
-    scene->LockAccess();
-
-    rotation += step_distance;
-    if(axis_idx==1){
-    obj->SetAng_Roll_deg(roll + rotation);
+    MobileObj* obj = scene->FindMobileObj(_Name.c_str());
+    if (!obj)
+    {
+      std::cerr << "Error: Mobile object '" << _Name << "' not found in the scene." << std::endl;
+      return false;
     }
-    else if(axis_idx==2){
-    obj->SetAng_Pitch_deg(pitch + rotation);
+
+    double roll = obj->GetAng_Roll_deg();
+    double pitch = obj->GetAng_Pitch_deg();
+    double yaw = obj->GetAng_Yaw_deg();
+
+    double time = _Angle / _Ang_speed;
+    double steps = static_cast<int>(time * N);
+    double step_distance = _Angle / steps;
+    double step = 100;
+
+    double rotation = 0;
+
+    int axis_idx = 0;
+    switch (_Axis[0])
+    {
+    case 'O':
+      axis_idx = (_Axis[1] == 'X') ? 1 : ((_Axis[1] == 'Y') ? 2 : ((_Axis[1] == 'Z') ? 3 : 0));
+      break;
+    default:
+      std::cout << "Błędna nazwa osi obrotu: " << _Axis << std::endl;
+      return false;
     }
-    else if(axis_idx==3){
-    obj->SetAng_Yaw_deg(yaw + rotation);
-    }    
-    scene->MarkChange();
-    scene->UnlockAccess();
-    usleep(step);
-  }
-  return true;
+
+    for (int i = 0; i < steps; ++i)
+    {
+      scene->LockAccess();
+
+      rotation += step_distance;
+      switch (axis_idx)
+      {
+      case 1:
+          obj->SetAng_Roll_deg(roll + rotation);
+          break;
+      case 2:
+          obj->SetAng_Pitch_deg(pitch + rotation);
+          break;
+      case 3:
+          obj->SetAng_Yaw_deg(yaw + rotation);
+          break;
+      }
+
+      scene->MarkChange();
+      scene->UnlockAccess();
+      usleep(step);
+    }
+
+    return true;
 }
+
 
 
 /*!

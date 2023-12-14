@@ -56,29 +56,31 @@ const char* Interp4Set::GetCmdName() const
 /*!
  *
  */
-bool Interp4Set::ExecCmd(Scene *scene) const
+bool Interp4Set::ExecCmd(Scene* scene) const
 {
+    MobileObj* obj = scene->FindMobileObj(_Name.c_str());
+    if (!obj)
+    {
+        std::cerr << "Error: Mobile object '" << _Name << "' not found in the scene." << std::endl;
+        return false;
+    }
 
-  MobileObj *obj = scene->FindMobileObj(_Name.c_str());
-  Vector3D new_position;
+    Vector3D new_position(_Wsp_x, _Wsp_y, _Wsp_z);
+    obj->SetPosition_m(new_position);
 
-  new_position[0] = _Wsp_x;
-  new_position[1] = _Wsp_y;
-  new_position[2] = _Wsp_z;
-  scene->LockAccess();
-  
+    obj->SetAng_Roll_deg(_Angle_x);
+    obj->SetAng_Pitch_deg(_Angle_y);
+    obj->SetAng_Yaw_deg(_Angle_z);
 
-  obj->SetPosition_m(new_position);
-  obj->SetAng_Roll_deg(_Angle_x);
-  obj->SetAng_Pitch_deg(_Angle_y);
-  obj->SetAng_Yaw_deg(_Angle_z);
+    scene->LockAccess();
+    scene->MarkChange();
+    scene->UnlockAccess();
 
-  scene->MarkChange();
-  scene->UnlockAccess();
-  usleep(10000);
+    usleep(10000);
 
-  return true;
+    return true;
 }
+
 
 
 /*!

@@ -57,41 +57,48 @@ const char* Interp4Move::GetCmdName() const
 /*!
  *
  */
-bool Interp4Move::ExecCmd(Scene *scene) const
+bool Interp4Move::ExecCmd(Scene* scene) const
 {
-  MobileObj *obj = scene->FindMobileObj(_Name.c_str());
-  Vector3D position = obj->GetPosition_m();
-  double roll= obj->GetAng_Roll_deg();
-  double pitch= obj->GetAng_Pitch_deg();
-  double yaw = obj->GetAng_Yaw_deg();
+    MobileObj* obj = scene->FindMobileObj(_Name.c_str());
+    if (!obj)
+    {
+      std::cerr << "Error: Mobile object '" << _Name << "' not found in the scene." << std::endl;
+      return false;
+    }
 
-  double time = _Distance_mm / _Speed_mmS;
-  double steps = (int)(time * N);
+    const double roll = obj->GetAng_Roll_deg();
+    const double pitch = obj->GetAng_Pitch_deg();
+    const double yaw = obj->GetAng_Yaw_deg();
+    const Vector3D position = obj->GetPosition_m();
 
-  double x_ = 0, y_ = 0, z_ = 0;
-  Vector3D move;
-  double step_distance = _Distance_mm / steps; 
-  double step = 5000;            
+    const double time = _Distance_mm / _Speed_mmS;
+    const double steps = static_cast<int>(time * N);
+    const double step_distance = _Distance_mm / steps;
 
+    scene->LockAccess();
 
-  for (int i = 0; i < steps; ++i)
-  {
-  scene->LockAccess();
-  
-    x_ += step_distance * cos(pitch * M_PI / 180) * cos(yaw * M_PI / 180);
-    y_ += step_distance * (cos(roll * M_PI / 180) * sin(yaw * M_PI / 180) + cos(yaw * M_PI / 180) * sin(pitch * M_PI / 180) * sin(roll * M_PI / 180));
-    z_ += step_distance * (sin(roll * M_PI / 180) * sin(yaw * M_PI / 180) - cos(roll * M_PI / 180) * cos(yaw * M_PI / 180) * sin(pitch * M_PI / 180));
-    move[0] = x_+ position[0];
-    move[1] = y_ + position[1];
-    move[2] = z_ + position[2];
-    
-    obj->SetPosition_m(move);
-    scene->MarkChange();
+    Vector3D move = position;
+    for (int i = 0; i < steps; ++i)
+    {
+      const double delta_x = step_distance * cos(pitch * M_PI / 180) * cos(yaw * M_PI / 180);
+      const double delta_y = step_distance * (cos(roll * M_PI / 180) * sin(yaw * M_PI / 180) +
+                                              cos(yaw * M_PI / 180) * sin(pitch * M_PI / 180) * sin(roll * M_PI / 180));
+      const double delta_z = step_distance * (sin(roll * M_PI / 180) * sin(yaw * M_PI / 180) -
+                                              cos(roll * M_PI / 180) * cos(yaw * M_PI / 180) * sin(pitch * M_PI / 180));
+
+      move[0] += delta_x;
+      move[1] += delta_y;
+      move[2] += delta_z;
+
+      obj->SetPosition_m(move);
+      scene->MarkChange();
+
+      usleep(5000);
+    }
+
     scene->UnlockAccess();
-    usleep(step);
-  }
 
-  return true;
+    return true;
 }
 
 
