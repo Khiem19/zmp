@@ -28,3 +28,10 @@ Begin_Parallel_Actions
     Rotate Base.Hood.WheelLeft OZ 2 10080 
     Rotate Base.Hood.WheelRight OZ 20 10080 
 End_Parallel_Actions
+Begin_Parallel_Actions
+    MOVE Base 20 10
+    MOVE Base.Boot.WheelLeft 20 10 
+    MOVE Base.Boot.WheelRight 20 10
+    MOVE Base.Hood.WheelLeft 20 10
+    MOVE Base.Hood.WheelRight 20 10
+End_Parallel_Actions
