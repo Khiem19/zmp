@@ -65,8 +65,12 @@ bool Interp4Set::ExecCmd(Scene* scene) const
         return false;
     }
 
-    Vector3D new_position(_Wsp_x, _Wsp_y, _Wsp_z);
-    obj->SetPosition_m(new_position);
+    Vector3D new_pos;
+    new_pos[0] = _Wsp_x;
+    new_pos[1] = _Wsp_y;
+    new_pos[2] = _Wsp_z;
+
+    obj->SetPosition_m(new_pos);
 
     obj->SetAng_Roll_deg(_Angle_x);
     obj->SetAng_Pitch_deg(_Angle_y);
