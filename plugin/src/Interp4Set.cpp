@@ -92,52 +92,27 @@ bool Interp4Set::ExecCmd(Scene* scene) const
  */
 bool Interp4Set::ReadParams(std::istream& Strm_CmdsList)
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
   if (!(Strm_CmdsList >> _Name))
   {
-    std::cout << "Blad wczytywania nazwy obiektu" << std::endl;
-    return 1;
+      std::cout << "Error: Failed to read object name." << std::endl;
+      return false;
   }
 
-  if (!(Strm_CmdsList >> _Wsp_x))
+  if (!(Strm_CmdsList >> _Wsp_x >> _Wsp_y >> _Wsp_z))
   {
-    std::cout << "Blad wczytywania wspolrzednej x" << std::endl;
-    return 1;
+      std::cout << "Error: Failed to read coordinates (x, y, z)." << std::endl;
+      return false;
   }
 
-  if (!(Strm_CmdsList >> _Wsp_y))
+  if (!(Strm_CmdsList >> _Angle_x >> _Angle_y >> _Angle_z))
   {
-    std::cout << "Blad wczytywania wspolrzednej y" << std::endl;
-    return 1;
+      std::cout << "Error: Failed to read angles (OX, OY, OZ)." << std::endl;
+      return false;
   }
 
-  if (!(Strm_CmdsList >> _Wsp_z))
-  {
-    std::cout << "Blad wczytywania wspolrzednej z" << std::endl;
-    return 1;
-  }
-
-    if (!(Strm_CmdsList >> _Angle_x))
-  {
-    std::cout << "Blad wczytywania kata z" << std::endl;
-    return 1;
-  }
-
-    if (!(Strm_CmdsList >> _Angle_y))
-  {
-    std::cout << "Blad wczytywania kata z" << std::endl;
-    return 1;
-  }
-
-    if (!(Strm_CmdsList >> _Angle_z))
-  {
-    std::cout << "Blad wczytywania kata z" << std::endl;
-    return 1;
-  }
-  return 0;
+  return true;
 }
+
 
 
 /*!
